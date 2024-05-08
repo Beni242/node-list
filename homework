@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct student {
+    char nom[50];
+    char surname[50];
+    char email[100];
+    int age;
+    struct student *next;
+};
+
+typedef struct student node;
+
+node* createlist() {
+    int n, k;
+
+    node *head = NULL, *p;
+
+    printf("How many students in the list: ");
+    scanf("%d", &n);
+
+    for (k = 0; k < n; k++) {
+        if (k == 0) {
+            head = (node*)malloc(sizeof(node));
+            p = head;
+        } else {
+            p->next = (node*)malloc(sizeof(node));
+            p = p->next;
+        }
+
+        printf("\nEnter %d. student name: ", k+1);
+        scanf("%s", p->nom);
+
+        printf("\nEnter %d. student surname: ", k+1);
+        scanf("%s", p->surname);
+        
+        printf("\nEnter %d. student email: ", k+1);
+        scanf("%s", p->email);
+
+        printf("\nEnter %d. student age:\n ", k+1);
+        scanf("%d", &p->age);
+    }
+
+    if (head != NULL)
+        p->next = NULL;
+
+    return head;
+}
+
+void displayList(node* head) {
+    node* current = head;
+    if (current == NULL) {
+        printf("The list is empty.\n");
+        return;
+    }
+    printf("Displaying the list:\n");
+    while (current != NULL) {
+        printf("\nName: %s\n", current->nom);
+        printf("Surname: %s\n", current->surname);
+        printf("Email: %s\n", current->email);
+        printf("Age: %d\n", current->age);
+        current = current->next;
+    }
+}
+
+int main(void) {
+    node *head;
+
+    printf("1. Create list\n");
+    head = createlist();
+    printf("Address: %p\n", (void*)head);
+    
+    displayList(head);
+
+    return 0;
+}
